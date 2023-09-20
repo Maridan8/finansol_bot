@@ -1,0 +1,132 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+        integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
+        integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>Text-Editor/IDE Charts</title>
+</head>
+<style>
+    #room::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+<body class="w-full justify-items-center flex flex-col" id="room">
+    <div class="w-full border-2 border-white mt-4"></div>
+    <div class="flex justify-end text-white text-2xl font-serif mt-4 me-16">Intent</div>
+    <label class="text-white text-xs mb-4">Most asked intent: {{ max_intent_name }} - {{ max_intent_num }} times</label>
+    <div class="flex flex-row w-1/2">
+        <canvas id="intentChart"></canvas>
+        <canvas id="intentPie"></canvas>
+    </div>
+    <div class="w-full border-2 border-white my-4"></div>
+    <div class="flex justify-end text-white text-2xl font-serif me-16">User</div>
+    <div class="flex flex-row w-1/3">
+        <canvas id="deviceChart" class=""></canvas>
+        <canvas id="browserChart" class=""></canvas>
+        <canvas id="osChart" class=""></canvas>
+    </div>
+    <div class="w-full border-2 border-white my-4"></div>
+    <div class="flex justify-end text-white text-2xl font-serif me-16">Session</div>
+    <canvas id="sessionChart" class="w-full"></canvas>
+    <div class="flex flex-row w-1/2">
+        <canvas id="sessionconfidenceChart" class="w-full"></canvas>
+    </div>
+    <div class="flex flex-row w-1/3 mt-4">
+        <canvas id="dayChart" class=""></canvas>
+        <canvas id="weekChart" class=""></canvas>
+        <canvas id="monthChart" class=""></canvas>
+    </div>
+    <!-- <canvas id="countryChart" class="w-full"></canvas>
+        <canvas id="ipChart" class="w-full"></canvas> -->
+
+    <script>
+        var intent_data = {{ IntentJSON | safe }}
+        var intent_ctx = document.getElementById("intentChart").getContext('2d');
+        var myChart = new Chart(intent_ctx, intent_data);
+
+        var intentpie_data = {{ IntentPie | safe }}
+        var intentpie_ctx = document.getElementById("intentPie").getContext("2d");
+        var myChart = new Chart(intentpie_ctx, intentpie_data);
+
+        // var Session_data = {{ SessionJSON | safe }}
+        var Session_ctx = document.getElementById("sessionChart").getContext('2d');
+        // var myChart = new Chart(Session_ctx, Session_data);
+        // console.log(Session_data);
+        var chartId = new Chart(Session_ctx, {
+            type: 'bar',
+            data: {
+                labels: ["HTML", "CSS", "JAVASCRIPT", "CHART.JS", "JQUERY", "BOOTSTRP"],
+                datasets: [{
+                    label: "online tutorial subjects",
+                    data: [20, 40, 30, 35, 30, 20],
+                    backgroundColor: ['coral', 'aqua', 'pink', 'lightgreen', 'lightblue', 'crimson'],
+                    borderColor: ['black'],
+                    borderWidth: 1,
+                    pointRadius: 4,
+                }],
+            },
+            options: {
+                responsive: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'orange',
+                            borderColor: 'orange',
+                        }
+                    }
+                }
+            },
+        });
+
+        var SessionConfidence_data = {{ SessionConfidenceJSON | safe }}
+        var SessionConfidence_ctx = document.getElementById("sessionconfidenceChart").getContext('2d');
+        var myChart = new Chart(SessionConfidence_ctx, SessionConfidence_data);
+
+        var Day_data = {{ DayJSON | safe }}
+        var Day_ctx = document.getElementById("dayChart").getContext('2d');
+        var myChart = new Chart(Day_ctx, Day_data);
+
+        var Week_data = {{ WeekJSON | safe }}
+        var Week_ctx = document.getElementById("weekChart").getContext('2d');
+        var myChart = new Chart(Week_ctx, Week_data);
+
+        var Month_data = {{ MonthJSON | safe }}
+        var Month_ctx = document.getElementById("monthChart").getContext('2d');
+        var myChart = new Chart(Month_ctx, Month_data);
+
+
+        // var Country_data = {{ CountryJSON | safe }}
+        // var Country_ctx = document.getElementById("countryChart").getContext('2d');
+        // var myChart = new Chart(Country_ctx, Country_data);
+
+        // var Ip_data = {{ IpJSON | safe }}
+        // var Ip_ctx = document.getElementById("ipChart").getContext('2d');
+        // var myChart = new Chart(Ip_ctx, Ip_data);
+
+        var Device_data = {{ DeviceJSON | safe }}
+        console.log(Device_data);
+        var Device_ctx = document.getElementById("deviceChart").getContext('2d');
+        var myChart = new Chart(Device_ctx, Device_data);
+
+        var Os_data = {{ OsJSON | safe }}
+        var Os_ctx = document.getElementById("osChart").getContext('2d');
+        var myChart = new Chart(Os_ctx, Os_data);
+
+        var Browser_data = {{ BrowserJSON | safe }}
+        var Browser_ctx = document.getElementById("browserChart").getContext('2d');
+        var myChart = new Chart(Browser_ctx, Browser_data);
+    </script>
+</body>
+
+</html>

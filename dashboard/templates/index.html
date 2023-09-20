@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind CSS 3 Simple Chat UI </title>
+  <!-- <link rel="stylesheet" type="text/css" href="./static/style.css"> -->
+  <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!--<script type="text/javascript" src="{% static 'script.js' %}"></script>-->
+  <script src="{% static 'script6.js' %}"></script>
+</head>
+
+<body>
+  <div class="fixed right-8 bottom-8">
+    <button id="chatbot_btn">
+      <img src="{% static 'images.png' %}" class="w-14 h-14 hover:w-16 hover:h-16">
+    </button>
+  </div>
+
+  <div class="fixed right-3 bottom-3 shadow-lg shadow-gray-500/400 w-1/5 z-20" id="chatbot_panel"
+    style="display: none;">
+    <div class="max-w-2xl rounded">
+      <div>
+        <div class="w-full">
+          <div class="relative flex items-center p-3 bg-sky-600 shadow shadow-sky-300 rounded-t-md">
+            <button class="block ml-2 font-bold text-white text-lg hover:text-xl" id="chatbot_close">Finansol
+              Chatbot</button>
+          </div>
+          <div class="relative w-full p-6 overflow-y-auto h-[40rem]" id="chat-history">
+            <ul class="space-y-2" id="chat-logs">
+              <div
+                class="mr-10 relative px-4 py-2 text-sm text-white rounded-tr-2xl rounded-bl-2xl shadow-md shadow-sky-500/50 bg-sky-500">
+                Merci pour votre clic!<br>
+                Mon nom est Chatbot, Charly Chatbot!<br>
+                Je voudrais bien devenir votre assistant conversationnel, aidé par mon intelligence
+                artificielle.<br>
+                Je répondrai à vos questions, comme ci-dessous, et plus tard aux questions de vos contacts en ligne
+                (maximum 8 questions FAQ).
+              </div>
+            </ul>
+          </div>
+          <div class="flex items-center justify-between w-full p-3 border-t border-gray-300">
+            <input type="text" placeholder="Type your message here."
+              class="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+              name="message" id="chat-input" required />
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

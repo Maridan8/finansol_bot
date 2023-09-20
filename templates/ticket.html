@@ -1,0 +1,11 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<form method="post" action="{% url 'ticket_generate' %}">
+    {% csrf_token %}
+    <input type="text" name="subject" placeholder="Please type ticket subject" required><br>
+    <textarea name="issue" placeholder="Please type your issues"
+        style="min-width: 50px; max-width: 400px; width: 400px; height: 100px;" required></textarea><br>
+    <button type="submit" style="background-color: transparent;  color: white; cursor: pointer;">Generate</button>
+</form>
+{% endblock %}

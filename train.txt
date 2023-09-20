@@ -1,0 +1,106 @@
+language: fr
+pipeline: 
+  - name: SpacyNLP
+    model: "en_core_web_md"
+  - name: SpacyTokenizer
+  - name: SpacyFeaturizer
+    pooling: mean
+  - name: SpacyEntityExtractor
+    dimensions: ["name"]
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: SklearnIntentClassifier
+  - name: EntitySynonymMapper
+  - name: ResponseSelector
+    epochs: 100
+    constrain_similarities: true
+  - name: FallbackClassifier
+    threshold: 0.25
+    ambiguity_threshold: 0.1
+
+policies: 
+  - name: MemoizationPolicy
+  - name: RulePolicy
+    core_fallback_threshold: 0.3
+    core_fallback_action_name: action_default_fallback
+    enable_fallback_prediction: true
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+
+
+entities:
+  - name
+  - email
+  - number
+  - state
+  - bug
+  - lead_state
+  - company
+  - meeting_state
+  
+slots:
+  name:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: name
+  number:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: number
+  email:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: email
+  state:
+    type: text
+    initial_value: init
+    mappings:
+    - type: from_entity
+      entity: state
+  bug:
+    type: bool
+    initial_value: false
+    mappings:
+    - type: from_entity
+      entity: bug
+
+  lead_state:
+    type: bool
+    initial_value: false
+    mappings:
+    - type: from_entity
+      entity: lead_state
+  company:
+    type: bool
+    initial_value: text
+    mappings:
+    - type: from_entity
+      entity: company
+  meeting_state:
+    type: bool
+    initial_value: false
+    mappings:
+    - type: from_entity
+      entity: meeting_state
+actions:
+  - action_default_fallback
+forms: {}
+e2e_actions: []
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+
+stories: []

@@ -1,0 +1,13 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" action="{% url 'upload_product' %}">
+    {% csrf_token %}
+    <input type="text" placeholder="Type product name" name="product_name" required><br>
+    <textarea name="info" placeholder="Please type product information"
+        style="min-width: 50px; max-width: 400px; width: 400px; height: 100px;" required></textarea><br>
+    <input type="file" name="images" accept="image/*" multiple><br>
+    <input type="number" placeholder="rank" name="rank"><br>
+    <button type="submit" style="background-color: transparent;  color: white; cursor: pointer;">Upload</button>
+</form>
+{% endblock %}
